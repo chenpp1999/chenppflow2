@@ -240,7 +240,7 @@ class TGCN(nn.Module):
         self._attention = senet(channel=3)       # 156为城市节点数
         self._attention_1d = senet_1d(156)
         # self.ResNet = ResNet_1d(self._input_dim, 3*hidden_dim)
-        self._gru = nn.GRU(3*self._hidden_dim, 3*self._hidden_dim//2, bidirectional=True)
+        self._gru = nn.GRU(3*self._hidden_dim, 3*self._hidden_dim, bidirectional=False)
         self.linear = nn.Linear(3*self._hidden_dim, self._hidden_dim)
         # self.w_tgcn = TGCN(self._adj, self._hidden_dim)
         # self.conv = nn.Conv2d(3, 3, kernel_size=2, stride=1, bias=Ture, padding=0)  #kernel_size还不确定
@@ -266,7 +266,7 @@ class TGCN(nn.Module):
         output = self._attention_1d(output)
         # output = self._attention(output).reshape(batch_size, self._input_dim, -1)  #(-1, 156, 192)
         # output = self.ResNet(output)
-        # output = self._gru(output)[0]
+        output = self._gru(output)[0]
         output = self.linear(output)
         return output
 
