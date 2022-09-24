@@ -170,7 +170,7 @@ class TGCN(nn.Module):
         self.t_tgcn = tTGCN(self.adj, self._hidden_dim)
         self.d_tgcn = tTGCN(self.adj, self._hidden_dim)
         self._attention = senet(207)       # 207为城市节点数
-        self._gru = nn.GRU(2*self._hidden_dim, self._hidden_dim, bidirectional=True)
+        self._gru = nn.GRU(2*self._hidden_dim, 2*self._hidden_dim, bidirectional=False)
         self.linear = nn.Linear(2*self._hidden_dim, self._hidden_dim)
         # self.w_tgcn = TGCN(self._adj, self._hidden_dim)
         # self.conv = nn.Conv2d(3, 3, kernel_size=2, stride=1, bias=Ture, padding=0)  #kernel_size还不确定
